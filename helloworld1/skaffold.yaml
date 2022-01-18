@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta22
+kind: Config
+metadata:
+  name: helloworld1
+build:
+  artifacts:
+    - image: helloworld1
+      docker:
+        dockerfile: deploy/build/Dockerfile
+     
+deploy:
+  kustomize:
+    paths:
+      - deploy/k8s
