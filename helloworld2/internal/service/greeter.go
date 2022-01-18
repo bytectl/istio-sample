@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	v1 "helloworld1/api/helloworld/v1"
-	"helloworld1/internal/biz"
+	v1 "helloworld2/api/helloworld2/v1"
+	"helloworld2/internal/biz"
 
 	"github.com/go-kratos/kratos/v2/log"
 )
@@ -23,11 +23,12 @@ func NewGreeterService(uc *biz.GreeterUsecase, logger log.Logger) *GreeterServic
 }
 
 // SayHello implements helloworld.GreeterServer
-func (s *GreeterService) SayHello(ctx context.Context, in *v1.HelloRequest) (*v1.HelloReply, error) {
+func (s *GreeterService) SayHello2(ctx context.Context, in *v1.Hello2Request) (*v1.Hello2Reply, error) {
 	s.log.WithContext(ctx).Infof("SayHello Received: %v", in.GetName())
 
 	if in.GetName() == "error" {
 		return nil, v1.ErrorUserNotFound("user not found: %s", in.GetName())
 	}
-	return &v1.HelloReply{Message: "helloword1 Hello " + in.GetName()}, nil
+	s.uc.Create(ctx, &biz.Greeter{Hello: in.GetName()})
+	return &v1.Hello2Reply{Message: "server2 Hello " + in.GetName()}, nil
 }

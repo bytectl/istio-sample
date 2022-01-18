@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld2
+  labels:
+    app: helloworld2
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld2
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: helloworld2
+        version: v1
+    spec:
+      containers:
+      - name: helloworld2
+        image: helloworld2:428e4fd--dirty
+        ports:
+        - name: http
+          containerPort: 8000
+        - name: grpc
+          containerPort: 9000
+        env:
+          - name: TZ
+            value: "Asia/Shanghai"                 
+        resources:
+          requests:
+            memory: "8Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "200m" 
+      restartPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: helloworld2-svc
+spec:
+  selector:
+    app: helloworld2
+    version: v1
+  ports:
+  - name: http
+    targetPort: http
+    port: 8000
+  - name: grpc
+    targetPort: grpc
+    port: 9000    

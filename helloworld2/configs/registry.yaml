@@ -1,0 +1,10 @@
+nacos:
+  address: "${NACOS_ADDRESS:10.10.18.240}"
+  port: "${NACOS_PORT:8848}"
+  data_ids: 
+  - "${NACOS_DATA_ID:data_id.yaml}"
+  namespace_id: "${NACOS_NAMESPACE_ID:public}"
+  group: "${NACOS_GROUP:DEFAULT_GROUP}"
+  log_level: "debug"
+  max_age: 3
+  rotate_time: "1h"

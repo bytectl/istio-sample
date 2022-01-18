@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package helloworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "helloworld2/api/helloworld2/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.helloworld2.v1";
+option java_outer_classname = "HelloWorld2ProtoV1";
+
+// The greeting service definition.
+service Greeter2 {
+  // Sends a greeting
+  rpc SayHello2 (Hello2Request) returns (Hello2Reply)  {
+        option (google.api.http) = {
+            get: "/helloworld2/{name}"
+        };
+    }
+}
+
+// The request message containing the user's name.
+message Hello2Request {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message Hello2Reply {
+  string message = 1;
+}
