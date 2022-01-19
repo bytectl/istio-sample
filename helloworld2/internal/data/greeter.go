@@ -24,8 +24,20 @@ func NewGreeterRepo(data *Data, logger log.Logger) biz.GreeterRepo {
 
 func (r *greeterRepo) CreateGreeter(ctx context.Context, g *biz.Greeter) error {
 	r.log.Debugf("CreateGreeter: %v", g)
-	r.data.hgclient.SayHello(ctx, &v1.HelloRequest{Name: g.Hello + "from http"})
-	r.data.gclient.SayHello(ctx, &v1.HelloRequest{Name: g.Hello + " from grpc"})
+	reply, err := r.data.hgclient.SayHello(ctx, &v1.HelloRequest{Name: g.Hello + "from http"})
+	if err != nil {
+		r.log.Errorf("CreateGreeter: %v", err)
+		return err
+
+	}
+	r.log.Debugf("hgclient: %v", reply)
+
+	reply, err = r.data.gclient.SayHello(ctx, &v1.HelloRequest{Name: g.Hello + " from grpc"})
+	if err != nil {
+		r.log.Errorf("CreateGreeter: %v", err)
+		return err
+	}
+	r.log.Debugf("gclient: %v", reply)
 	return nil
 }
 

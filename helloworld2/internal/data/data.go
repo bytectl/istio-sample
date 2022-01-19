@@ -34,10 +34,10 @@ func NewData(c *conf.Data, logger log.Logger, gclient v1.GreeterClient, hgclient
 }
 
 func NewGreeterClient() v1.GreeterClient {
-	// http: //127.0.0.1:8000?isSecure=false
+	// direct:///helloworld1-svc:9000
 	conn, err := grpc.DialInsecure(
 		context.Background(),
-		grpc.WithEndpoint("grpc://helloword1-svc:9000?isSecure=false"),
+		grpc.WithEndpoint("direct:///helloworld1:9000"),
 		grpc.WithMiddleware(
 			recovery.Recovery(),
 		),
@@ -49,10 +49,10 @@ func NewGreeterClient() v1.GreeterClient {
 }
 
 func NewGreeterHttpClient() v1.GreeterHTTPClient {
-	// http: //127.0.0.1:8000?isSecure=false
+	// http: //helloworld1-svc:8000?isSecure=false
 	conn, err := http.NewClient(
 		context.Background(),
-		http.WithEndpoint("http://helloword1-svc:8000?isSecure=false"),
+		http.WithEndpoint("http://helloworld1:8000?isSecure=false"),
 	)
 	if err != nil {
 		panic(err)

@@ -11,7 +11,7 @@ import (
 
 // GreeterService is a greeter service.
 type GreeterService struct {
-	v1.UnimplementedGreeter2Server
+	v1.UnimplementedGreeterServer
 
 	uc  *biz.GreeterUsecase
 	log *log.Helper

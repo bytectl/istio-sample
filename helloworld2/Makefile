@@ -1,5 +1,5 @@
 GOPATH:=$(shell go env GOPATH)
-VERSION=$(shell git describe --tags --always)$(shell git diff --quiet || echo "--dirty")
+VERSION=$(shell git describe --tags --always)$(shell git diff --quiet || echo "-dirty")
 INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
 API_PROTO_FILES=$(shell find api -name *.proto)
 
@@ -50,7 +50,7 @@ build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 # build a docker image
 docker: build
-	docker build -t helloworld2:$(VERSION) . 
+	export DOCKER_HOST=tcp://10.10.18.241:2375 && docker build -t helloworld2:$(VERSION) . 
 # push images to docker registry
 push: docker
 	docker push helloworld2:$(VERSION)
